@@ -1,0 +1,22 @@
+{
+    "storage_account_name": "dlsmde01ccossi01v2",
+    "datasource": "webpage",
+    "dataset": "online_sales",    
+    "source": {
+        "format" : "cloudFiles",
+        "options" : {          
+            "cloudFiles.format": "csv",
+            "header": "true",
+            "sep": ",",
+            "cloudFiles.inferColumnTypes": "true",
+            "cloudFiles.schemaEvolutionMode": "rescue",
+            "cloudFiles.schemaHints": "sales_price DOUBLE, timestamp TIMESTAMP"
+        }
+    },
+    "sink": {        
+        "format": "delta",
+        "options": {
+            "mergeSchema": "true"
+        }
+    }
+}

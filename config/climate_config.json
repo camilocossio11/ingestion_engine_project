@@ -1,0 +1,20 @@
+{
+    "storage_account_name": "dlsmde01ccossi01v2",
+    "datasource": "meteorologic_center",
+    "dataset": "climate",    
+    "source": {
+        "format" : "cloudFiles",
+        "options" : {          
+            "cloudFiles.format": "json",
+            "cloudFiles.inferColumnTypes": "true",
+            "cloudFiles.schemaEvolutionMode": "rescue",
+            "cloudFiles.schemaHints": "temperature_C double, precipitation_mm double, humidity_percent double, solar_radiation_Wm2 double, wind_speed_mps double, timestamp string"
+        }
+    },
+    "sink": {        
+        "format": "delta",
+        "options": {
+            "mergeSchema": "true"
+        }
+    }
+}

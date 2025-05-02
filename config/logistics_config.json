@@ -1,0 +1,20 @@
+{
+    "storage_account_name": "dlsmde01ccossi01v2",
+    "datasource": "internal_system",
+    "dataset": "logistics",
+    "source": {
+        "format" : "cloudFiles",
+        "options" : {
+            "cloudFiles.format": "parquet",
+            "cloudFiles.inferColumnTypes": "true",
+            "cloudFiles.schemaEvolutionMode": "rescue",
+            "cloudFiles.schemaHints": "timestamp TIMESTAMP, pickup_date DATE, scheduled_delivery_date DATE, actual_delivery_date DATE"
+        }
+    },
+    "sink": {
+        "format": "delta",
+        "options": {
+            "mergeSchema": "true"
+        }
+    }
+}

@@ -1,0 +1,22 @@
+{
+    "storage_account_name": "dlsmde01ccossi01v2",
+    "datasource": "internal_system",
+    "dataset": "inventory",    
+    "source": {
+        "format" : "cloudFiles",
+        "options" : {          
+            "cloudFiles.format": "csv",
+            "header": "true",
+            "sep": ",",
+            "cloudFiles.inferColumnTypes": "true",
+            "cloudFiles.schemaEvolutionMode": "rescue",
+            "cloudFiles.schemaHints": "stock_quantity DOUBLE, purchase_price DOUBLE, sales_price DOUBLE, timestamp timestamp, manufacturing_date DATE, expiration_date DATE"
+        }
+    },
+    "sink": {        
+        "format": "delta",
+        "options": {
+            "mergeSchema": "true"
+        }
+    }
+}
