@@ -1,0 +1,24 @@
+{
+    "storage_account_name": "dlsmde01ccossi01v2",
+    "lakehouse_container_name": "datalake",
+    "secret_scope": "akvmde01ccossi01",
+    "secret_key_name": "accesskey",
+    "datasource": "telemetry",
+    "dataset": "iot_sensors",
+    "kafka_config_path": "./config/confluent_kafka/client_properties",
+    "source": {
+        "format" : "kafka",
+        "options" : {
+            "subscribe" : "topic_iot_sensors",
+            "startingOffsets" : "earliest"
+        },
+        "key_format": "string",
+        "value_format": "avro"
+    },
+    "sink": {
+        "format": "delta",
+        "options": {
+            "mergeSchema": "true"
+        }
+    }
+}

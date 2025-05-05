@@ -1,0 +1,31 @@
+{
+    "storage_account_name": "dlsmde01ccossi01v2",
+    "lakehouse_container_name": "datalake",
+    "secret_scope": "akvmde01ccossi01",
+    "secret_key_name": "accesskey",
+    "datasource": "internal_system",
+    "dataset": "logistics",
+    "last_ingest_processed_date": "2025-05-02 19:56:03.707",
+    "timestamp_col": "timestamp",
+    "source": {
+        "schema": "bronze",
+        "table": "logistics"
+    },
+    "sink": {
+        "schema": "silver",
+        "table": "logistics"
+    },
+    "transformations": {
+        "coord_col": "coord",
+        "columns_to_upper": [
+            "shipment_status"
+        ]
+    },
+    "imputations": [
+        {
+            "field": "actual_delivery_date",
+            "method": "replace",
+            "col_value": "scheduled_delivery_date"
+        }
+    ]
+}

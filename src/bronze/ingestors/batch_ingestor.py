@@ -1,46 +1,18 @@
-import json
-import os
-
 from ingestors.base import BaseIngestor
 from loguru import logger
 from pyspark.sql import functions as F
 
-exec_env = os.getenv("EXECUTION_ENV", "databricks-connect")
-if exec_env == "databricks-connect":
-    logger.info("Executing with databricks-connect")
-    from databricks.connect import DatabricksSession as SparkSession
-else:
-    from pyspark.sql import SparkSession
-
 
 class BatchIngestor(BaseIngestor):
 
-    def __init__(self, config_path: str):
-        self.spark = SparkSession.builder.getOrCreate()
-
-        with open(config_path, "r") as f:
-            config = json.load(f)
-
-        self.config = config
-        self.connect_to_storage_account(self.spark, self.config.get("storage_account_name"))
-
-    def create_table(self, dataset, location):
-        if not self.spark.catalog.tableExists(f"bronze.{dataset}"):
-            logger.info(f"Creating external table bronze.{dataset}")
-            self.spark.sql("CREATE SCHEMA IF NOT EXISTS bronze")
-
-            self.spark.sql(
-                f"""
-                CREATE TABLE IF NOT EXISTS bronze.{dataset}
-                USING DELTA
-                LOCATION '{location}'"""
-            )
-            logger.info("Table successfully created")
+    def __init__(self, config_path: str) -> None:
+        super().__init__(config_path)
 
     def ingest(self) -> None:
         logger.info("Defining configuration using config file")
         account = self.config.get("storage_account_name")
-        lakehouse_container = f"abfss://datalake@{account}.dfs.core.windows.net"
+        lkh_container_name = self.config.get("lakehouse_container_name")
+        lakehouse_container = f"abfss://{lkh_container_name}@{account}.dfs.core.windows.net"
         landing_container = f"abfss://landing@{account}.dfs.core.windows.net"
 
         datasource = self.config.get("datasource")

@@ -1,0 +1,44 @@
+{
+    "storage_account_name": "dlsmde01ccossi01v2",
+    "lakehouse_container_name": "datalake",
+    "secret_scope": "akvmde01ccossi01",
+    "secret_key_name": "accesskey",
+    "datasource": "webpage",
+    "dataset": "online_sales",
+    "last_ingest_processed_date": "2025-05-02 20:02:36.204",
+    "timestamp_col": "timestamp",
+    "source": {
+        "schema": "bronze",
+        "table": "online_sales"
+    },
+    "sink": {
+        "schema": "silver",
+        "table": "online_sales"
+    },
+    "transformations": {
+        "prod_col": "product",
+        "coord_col": "coord",
+        "address_col": "address",
+        "columns_to_upper": [
+            "payment_method",
+            "transaction_status",
+            "city",
+            "category",
+            "address",
+            "product_id",
+            "product_name"
+        ]
+    },
+    "imputations": [
+        {
+            "field": "currency",
+            "method": "fixed",
+            "value": "EUR"
+        },
+        {
+            "field": "payment_method",
+            "method": "fixed",
+            "value": "CREDIT_CARD"
+        }
+    ]
+}

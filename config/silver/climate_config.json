@@ -1,0 +1,53 @@
+{
+    "storage_account_name": "dlsmde01ccossi01v2",
+    "lakehouse_container_name": "datalake",
+    "secret_scope": "akvmde01ccossi01",
+    "secret_key_name": "accesskey",
+    "datasource": "meteorologic_center",
+    "dataset": "climate",
+    "last_ingest_processed_date": "2025-05-04 20:33:48.006",
+    "raw_timestamp": "timestamp",
+    "source": {
+        "schema": "bronze",
+        "table": "climate"
+    },
+    "sink": {
+        "schema": "silver",
+        "table": "climate"
+    },
+    "transformations": {
+        "coord_col": "coord"
+    },
+    "imputations": [
+        {
+            "field": "temperature_C",
+            "method": "window",
+            "window_size_hr": 3,
+            "partition_by": "station_id"
+        },
+        {
+            "field": "humidity_percent",
+            "method": "window",
+            "window_size_hr": 3,
+            "partition_by": "station_id"
+        },
+        {
+            "field": "precipitation_mm",
+            "method": "window",
+            "window_size_hr": 3,
+            "partition_by": "station_id"
+        },
+        {
+            "field": "solar_radiation_Wm2",
+            "method": "window",
+            "window_size_hr": 3,
+            "partition_by": "station_id"
+        },
+        {
+            "field": "wind_speed_mps",
+            "method": "window",
+            "window_size_hr": 3,
+            "partition_by": "station_id"
+        }
+    ]
+}

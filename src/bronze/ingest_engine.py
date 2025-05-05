@@ -4,7 +4,7 @@ from registry import INGESTOR_REGISTRY
 
 class Engine:
 
-    def __init__(self, workload: str, config_path: str):
+    def __init__(self, workload: str, config_path: str) -> None:
         self.workload = workload
         ingestor_class = INGESTOR_REGISTRY.get(workload)
 
@@ -15,13 +15,14 @@ class Engine:
 
         self.ingestor = ingestor_class(config_path)
 
-    def ingest(self):
+    def ingest(self) -> None:
         logger.info(f"Starting the ingestion for workload {self.workload}")
         self.ingestor.ingest()
 
 
 if __name__ == "__main__":
-    dataset = "online_sales"
-    config_path = f"./config/{dataset}_config.json"
-    engine = Engine("batch", config_path)
+    dataset = "iot_sensors"
+    config_path = f"./config/bronze/{dataset}_config.json"
+    workload = "streaming"
+    engine = Engine(workload, config_path)
     engine.ingest()
