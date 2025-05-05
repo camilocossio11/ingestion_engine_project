@@ -21,7 +21,7 @@ class ProcessorEngine:
 
 
 if __name__ == "__main__":
-    dataset = "iot_sensors"
+    dataset = "climate"
     config_path = f"./config/silver/{dataset}_config.json"
     engine = ProcessorEngine(dataset, config_path)
     engine.process()

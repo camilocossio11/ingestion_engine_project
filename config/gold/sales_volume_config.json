@@ -1,0 +1,11 @@
+{
+    "storage_account_name": "dlsmde01ccossi01v2",
+    "lakehouse_container_name": "datalake",
+    "secret_scope": "akvmde01ccossi01",
+    "secret_key_name": "accesskey",
+    "dataset": "sales_volume",
+    "sink": {
+        "schema": "gold",
+        "table": "sales_volume"
+    }
+}

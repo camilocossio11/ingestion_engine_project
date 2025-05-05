@@ -21,8 +21,8 @@ class Engine:
 
 
 if __name__ == "__main__":
-    dataset = "iot_sensors"
+    dataset = "climate"
     config_path = f"./config/bronze/{dataset}_config.json"
-    workload = "streaming"
+    workload = "batch"
     engine = Engine(workload, config_path)
     engine.ingest()
