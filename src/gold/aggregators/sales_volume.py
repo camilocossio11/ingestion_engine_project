@@ -1,5 +1,6 @@
-from aggregators.base import BaseAggregator
 from pyspark.sql import functions as F
+
+from .base import BaseAggregator
 
 
 class SalesVolume(BaseAggregator):

@@ -6,7 +6,7 @@ from loguru import logger
 from pyspark.dbutils import DBUtils
 from pyspark.sql import DataFrame as DF
 
-exec_env = os.getenv("EXECUTION_ENV", "databricks-connect")
+exec_env = os.getenv("EXECUTION_ENV", "local")
 if exec_env == "databricks-connect":
     logger.info("Executing with databricks-connect")
     from databricks.connect import DatabricksSession as SparkSession

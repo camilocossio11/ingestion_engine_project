@@ -1,5 +1,6 @@
 from loguru import logger
-from registry import INGESTOR_REGISTRY
+
+from bronze.registry import INGESTOR_REGISTRY
 
 
 class Engine:

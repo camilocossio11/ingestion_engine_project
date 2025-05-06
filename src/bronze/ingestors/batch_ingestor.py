@@ -1,6 +1,7 @@
-from ingestors.base import BaseIngestor
 from loguru import logger
 from pyspark.sql import functions as F
+
+from .base import BaseIngestor
 
 
 class BatchIngestor(BaseIngestor):

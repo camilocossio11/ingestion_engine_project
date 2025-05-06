@@ -1,4 +1,3 @@
-from ingestors.batch_ingestor import BatchIngestor
-from ingestors.streaming_ingestor import StreamingIngestor
+from .ingestors import BatchIngestor, StreamingIngestor
 
 INGESTOR_REGISTRY = {"batch": BatchIngestor, "streaming": StreamingIngestor}

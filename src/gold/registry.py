@@ -1,6 +1,4 @@
-from aggregators.climate_impact import ClimateImpact
-from aggregators.order_fulfillment_performance import OrderFulfillmentPerformance
-from aggregators.sales_volume import SalesVolume
+from .aggregators import ClimateImpact, OrderFulfillmentPerformance, SalesVolume
 
 AGGREGATORS_REGISTRY = {
     "climate_impact": ClimateImpact,

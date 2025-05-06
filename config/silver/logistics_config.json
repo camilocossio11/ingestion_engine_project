@@ -5,7 +5,7 @@
     "secret_key_name": "accesskey",
     "datasource": "internal_system",
     "dataset": "logistics",
-    "last_ingest_processed_date": "2025-05-02 19:56:03.707",
+    "last_ingest_processed_date": null,
     "timestamp_col": "timestamp",
     "source": {
         "schema": "bronze",

@@ -8,7 +8,7 @@ from pyspark.sql import DataFrame as DF
 from pyspark.sql import functions as F
 from pyspark.sql.window import Window
 
-exec_env = os.getenv("EXECUTION_ENV", "databricks-connect")
+exec_env = os.getenv("EXECUTION_ENV", "local")
 if exec_env == "databricks-connect":
     logger.info("Executing with databricks-connect")
     from databricks.connect import DatabricksSession as SparkSession

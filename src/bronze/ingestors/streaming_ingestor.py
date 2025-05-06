@@ -1,8 +1,9 @@
 from confluent_kafka.schema_registry import SchemaRegistryClient
-from ingestors.base import BaseIngestor
 from loguru import logger
 from pyspark.sql import functions as F
 from pyspark.sql.avro.functions import from_avro
+
+from .base import BaseIngestor
 
 
 class StreamingIngestor(BaseIngestor):

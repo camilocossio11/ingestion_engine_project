@@ -1,7 +1,8 @@
 from loguru import logger
-from processors.base import BaseProcessor
 from pyspark.sql import DataFrame as DF
 from pyspark.sql import functions as F
+
+from .base import BaseProcessor
 
 
 class InventoryProcessor(BaseProcessor):

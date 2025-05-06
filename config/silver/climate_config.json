@@ -5,7 +5,7 @@
     "secret_key_name": "accesskey",
     "datasource": "meteorologic_center",
     "dataset": "climate",
-    "last_ingest_processed_date": "2025-05-05 18:50:57.402",
+    "last_ingest_processed_date": null,
     "raw_timestamp": "timestamp",
     "source": {
         "schema": "bronze",

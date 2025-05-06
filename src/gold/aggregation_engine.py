@@ -1,5 +1,6 @@
 from loguru import logger
-from registry import AGGREGATORS_REGISTRY
+
+from gold.registry import AGGREGATORS_REGISTRY
 
 
 class AggregatorEngine:

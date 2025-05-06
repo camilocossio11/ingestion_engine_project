@@ -5,7 +5,7 @@
     "secret_key_name": "accesskey",
     "datasource": "webpage",
     "dataset": "online_sales",
-    "last_ingest_processed_date": "2025-05-02 20:02:36.204",
+    "last_ingest_processed_date": null,
     "timestamp_col": "timestamp",
     "source": {
         "schema": "bronze",

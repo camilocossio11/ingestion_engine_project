@@ -1,5 +1,6 @@
 from loguru import logger
-from registry import PROCESSOR_REGISTRY
+
+from silver.registry import PROCESSOR_REGISTRY
 
 
 class ProcessorEngine:

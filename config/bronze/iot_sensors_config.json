@@ -5,7 +5,7 @@
     "secret_key_name": "accesskey",
     "datasource": "telemetry",
     "dataset": "iot_sensors",
-    "kafka_config_path": "./config/confluent_kafka/client_properties",
+    "kafka_config_path": "/dbfs/FileStore/config/confluent_kafka/client_properties",
     "source": {
         "format" : "kafka",
         "options" : {
