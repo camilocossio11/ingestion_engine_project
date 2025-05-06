@@ -1,0 +1,27 @@
+[project]
+name = "lakehouse-pipeline"
+version = "0.1.0"
+description = "ETL pipeline structured in bronze, silver, and gold layers for Farmia"
+authors = [
+  { name="Camilo Cossio", email="camilo.cossio111@gmail.com" }
+]
+license = { text = "MIT" }
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "loguru==0.7.1",
+    "pyspark==3.5.0",
+    "pandas==2.2.1",
+    "confluent-kafka==2.10.0"
+]
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["bronze*", "silver*", "gold*"]
