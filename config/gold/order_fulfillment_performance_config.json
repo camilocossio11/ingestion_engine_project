@@ -1,0 +1,11 @@
+{
+    "storage_account_name": "dlsmde01ccossi01",
+    "lakehouse_container_name": "lakehouse",
+    "secret_scope": "akvmde01ccossi",
+    "secret_key_name": "stg-account-access-key",
+    "dataset": "order_fulfillment_performance",
+    "sink": {
+        "schema": "gold",
+        "table": "order_fulfillment_performance"
+    }
+}

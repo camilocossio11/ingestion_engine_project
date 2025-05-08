@@ -1,0 +1,25 @@
+{
+    "storage_account_name": "dlsmde01ccossi01",
+    "lakehouse_container_name": "lakehouse",
+    "secret_scope": "akvmde01ccossi",
+    "secret_key_name": "stg-account-access-key",
+    "datasource": "applications",
+    "dataset": "client_data",
+    "kafka_config_path": "/dbfs/FileStore/config/confluent_kafka/client_properties",
+    "source": {
+        "format" : "kafka",
+        "options" : {
+            "subscribe" : "topic_client_data",
+            "startingOffsets" : "earliest"
+        },
+        "key_format": "string",
+        "value_format": "json",
+        "json_schema": "timestamp timestamp, full_name string, email string, age int, clicked_ads int, wishlist_items array<string>, engagement_score double"
+    },
+    "sink": {
+        "format": "delta",
+        "options": {
+            "mergeSchema": "true"
+        }
+    }
+}

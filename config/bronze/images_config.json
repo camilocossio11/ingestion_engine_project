@@ -1,0 +1,21 @@
+{
+    "storage_account_name": "dlsmde01ccossi01",
+    "lakehouse_container_name": "lakehouse",
+    "secret_scope": "akvmde01ccossi",
+    "secret_key_name": "stg-account-access-key",
+    "datasource": "internal_system",
+    "dataset": "products_images",    
+    "source": {
+        "format" : "cloudFiles",
+        "options" : {          
+            "cloudFiles.format": "binaryFile",
+            "cloudFiles.includeExistingFiles": "true"
+        }
+    },
+    "sink": {        
+        "format": "delta",
+        "options": {
+            "mergeSchema": "true"
+        }
+    }
+}

@@ -12,3 +12,4 @@ grpcio-status==1.59.3
 # el paquete pandas no es necesario para ejecutar en Databricks porque ya viene instalado
 pandas==2.2.1
 loguru
+confluent_kafka

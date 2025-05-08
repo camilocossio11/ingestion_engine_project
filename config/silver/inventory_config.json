@@ -1,0 +1,39 @@
+{
+    "storage_account_name": "dlsmde01ccossi01",
+    "lakehouse_container_name": "lakehouse",
+    "secret_scope": "akvmde01ccossi",
+    "secret_key_name": "stg-account-access-key",
+    "datasource": "internal_system",
+    "dataset": "inventory",
+    "last_ingest_processed_date": null,
+    "timestamp_col": "timestamp",
+    "source": {
+        "schema": "bronze",
+        "table": "inventory"
+    },
+    "sink": {
+        "schema": "silver",
+        "table": "inventory"
+    },
+    "transformations": {
+        "prod_col": "product",
+        "columns_to_upper": [
+            "category"
+        ]
+    },
+    "imputations": [
+        {
+            "field": "stock_quantity",
+            "method": "mean"
+        },
+        {
+            "field": "expiration_date",
+            "method": "fixed",
+            "value": 40
+        },
+        {
+            "field": "sales_price",
+            "method": "mean"
+        }
+    ]
+}

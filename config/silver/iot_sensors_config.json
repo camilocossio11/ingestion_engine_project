@@ -1,0 +1,38 @@
+{
+    "storage_account_name": "dlsmde01ccossi01",
+    "lakehouse_container_name": "lakehouse",
+    "secret_scope": "akvmde01ccossi",
+    "secret_key_name": "stg-account-access-key",
+    "datasource": "telemetry",
+    "dataset": "iot_sensors",
+    "last_ingest_processed_date": null,
+    "timestamp_col": "timestamp",
+    "source": {
+        "schema": "bronze",
+        "table": "iot_sensors"
+    },
+    "sink": {
+        "schema": "silver",
+        "table": "iot_sensors"
+    },
+    "imputations": [
+        {
+            "field": "soil_temperature",
+            "method": "window",
+            "window_size_hr": 2,
+            "partition_by": "key"
+        },
+        {
+            "field": "soil_humidity",
+            "method": "window",
+            "window_size_hr": 2,
+            "partition_by": "key"
+        },
+        {
+            "field": "soil_quality",
+            "method": "window",
+            "window_size_hr": 2,
+            "partition_by": "key"
+        }
+    ]
+}
