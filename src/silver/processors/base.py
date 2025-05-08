@@ -127,6 +127,8 @@ class BaseProcessor(ABC):
         table = sink_config.get("table")
         logger.info(f"Uploading external table {schema}.{table} in '{location}'")
 
+        self.spark.sql(f"CREATE SCHEMA IF NOT EXISTS silver MANAGED LOCATION '{silver_path}'")
+
         (
             df.write.format("delta")
             .mode("append")
