@@ -58,6 +58,8 @@ class BaseAggregator(ABC):
         table = sink_config.get("table")
         logger.info(f"Uploading external table {schema}.{table} in '{location}'")
 
+        self.spark.sql(f"CREATE SCHEMA IF NOT EXISTS gold MANAGED LOCATION '{gold_path}'")
+
         (
             df.write.format("delta")
             .mode("overwrite")
