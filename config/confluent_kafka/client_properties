@@ -2,12 +2,12 @@
 bootstrap.servers=pkc-921jm.us-east-2.aws.confluent.cloud:9092
 security.protocol=SASL_SSL
 sasl.mechanisms=PLAIN
-sasl.username=LKHKXAV43BAO3B2Y
-sasl.password=8Zcmw8LQmoqBSNQGH3y3Xq+koEfjAWG0nbKe33N1nSU+JMFToM9bQ3OO34A/IwY8
-url=https://psrc-e0919.us-east-2.aws.confluent.cloud
-basic.auth.user.info=3V6ZA52AX2PJTOQX:f22gMhO6kWGSCk3GKq84R2rJ9fM3zoVdVTmt1nY5pPWkupMgq5S3G3zliVBaPb0v
+sasl.username=KMDS53TJY5GRKA7V
+sasl.password=UdKrVU89Ol4u5hOG5410KGq6LE8GpyogUwEpz7AYxnTmKugcU1k7OmvF9VNi7b5R
 
 # Best practice for higher availability in librdkafka clients prior to 1.7
 session.timeout.ms=45000
 
-client.id=ccloud-python-client-758566b2-581f-4b70-97c0-96c6f69c3fb4
+client.id=ccloud-python-client-364962d7-f8b2-4e17-afa9-91c51a1de59c
+basic.auth.user.info=YBKO32M7DFEWAQMW:MqK2SrKjWTUUrjjAIbhuSKHal0zsxuvhM0FJ46Ysxp7PsQ1F8LRNMZkRQ78m2O1D
+url=https://psrc-e0919.us-east-2.aws.confluent.cloud
