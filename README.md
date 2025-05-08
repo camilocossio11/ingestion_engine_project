@@ -387,6 +387,8 @@ basic.auth.user.info={API_key}:{API_secret}
 url={URL}
 ```
 
+![kfk7](./images/kfk7.png)
+
 ## Databricks Configurations
 
 ### Create External Locations for each Layer

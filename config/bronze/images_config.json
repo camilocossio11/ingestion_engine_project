@@ -1,7 +1,7 @@
 {
-    "storage_account_name": "dlsmde01ccossi01",
+    "storage_account_name": "dlsmde01{your_user}",
     "lakehouse_container_name": "lakehouse",
-    "secret_scope": "akvmde01ccossi",
+    "secret_scope": "akvmde01{your_user}",
     "secret_key_name": "stg-account-access-key",
     "datasource": "internal_system",
     "dataset": "products_images",    
