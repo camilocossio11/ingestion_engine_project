@@ -5,11 +5,45 @@ from .base import BaseIngestor
 
 
 class BatchIngestor(BaseIngestor):
+    """
+    Concrete implementation of BaseIngestor for batch ingestion.
+
+    This class defines the `ingest` method to read streaming data from a
+    landing zone, enrich it with metadata columns, and write it to a bronze
+    Delta Lake table. It supports schema inference and checkpointing.
+
+    Attributes:
+        spark (SparkSession): Inherited Spark session from BaseIngestor.
+        config (dict): Configuration loaded from the provided JSON file.
+    """
 
     def __init__(self, config_path: str) -> None:
+        """
+        Initialize the BatchIngestor instance.
+
+        Args:
+            config_path (str): Path to the JSON configuration file.
+        """
         super().__init__(config_path)
 
     def ingest(self) -> None:
+        """
+        Perform the batch ingestion process:
+            - Builds paths for the landing zone and bronze storage.
+            - Reads streaming data using the format and options specified in the config.
+            - Adds metadata columns such as `_ingested_filename` and `_ingestion_time`.
+            - Writes the data as a Delta table in the bronze zone.
+            - Waits for the streaming query to complete.
+            - Creates the Delta table in the metastore if it does not exist.
+
+        The configuration file must include:
+            - storage_account_name
+            - lakehouse_container_name
+            - datasource
+            - dataset
+            - source: dict with keys `format` and `options`
+            - sink: dict with keys `format` and `options`
+        """
         logger.info("Defining configuration using config file")
         account = self.config.get("storage_account_name")
         lkh_container_name = self.config.get("lakehouse_container_name")
@@ -40,6 +74,7 @@ class BatchIngestor(BaseIngestor):
             .withColumn("_ingested_filename", F.input_file_name())
             .withColumn("_ingestion_time", F.current_timestamp())
         )
+
         query = (
             df.writeStream.format(sink_format)
             .options(**sink_opts)
@@ -48,6 +83,7 @@ class BatchIngestor(BaseIngestor):
             .queryName(f"{datasource} {dataset}")
             .start(f"{bronze_path}/{datasource}/{dataset}")
         )
+
         query.awaitTermination()
         logger.info(
             f"Ingest process finished. Data written in {bronze_path}/{datasource}/{dataset}"

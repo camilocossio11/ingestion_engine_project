@@ -17,8 +17,31 @@ else:
 
 
 class BaseProcessor(ABC):
+    """
+    Abstract base class for implementing data processing logic on Delta Lake tables
+    using PySpark.
+
+    This class provides utility methods for:
+    - Reading data from a bronze table with optional incremental filtering
+    - Enriching and transforming data
+    - Writing processed data to a silver Delta table
+    - Maintaining metadata such as last processed timestamps
+
+    Subclasses must implement the `process` method to define specific transformation logic.
+
+    Attributes:
+        spark (SparkSession): Active Spark session for processing data.
+        config (dict): Configuration dictionary loaded from a JSON file.
+        config_path (str): Path to the configuration file, used for updating metadata.
+    """
 
     def __init__(self, config_path: str):
+        """
+        Initialize the processor and load the configuration.
+
+        Args:
+            config_path (str): Path to the JSON config file.
+        """
         self.spark = SparkSession.builder.getOrCreate()
         self.config_path = config_path
 
@@ -30,9 +53,17 @@ class BaseProcessor(ABC):
 
     @abstractmethod
     def process(self):
+        """
+        Abstract method to be implemented by subclasses to define the data
+        processing workflow.
+        """
         pass
 
     def connect_to_storage_account(self) -> None:
+        """
+        Configure Spark to access Azure Data Lake Storage using secrets
+        stored in Databricks secret scope.
+        """
         dbutils = DBUtils(self.spark)
         storage_account_name = self.config.get("storage_account_name")
         secret_scope = self.config.get("secret_scope")
@@ -43,6 +74,12 @@ class BaseProcessor(ABC):
         )
 
     def read_bronze_table(self) -> DF:
+        """
+        Read data from the bronze table, optionally filtered by the last processed timestamp.
+
+        Returns:
+            DataFrame: The loaded data from the bronze layer.
+        """
         last_ingest_processed = self.config.get("last_ingest_processed_date")
         source_config = self.config.get("source")
         schema = source_config.get("schema")
@@ -72,11 +109,31 @@ class BaseProcessor(ABC):
         return df
 
     def uppercase_columns(self, df: DF, cols_to_upper: list) -> DF:
+        """
+        Uppercase the values of specific columns.
+
+        Args:
+            df (DataFrame): Input DataFrame.
+            cols_to_upper (list): List of column names to transform.
+
+        Returns:
+            DataFrame: Updated DataFrame with uppercased columns.
+        """
         for col in cols_to_upper:
             df = df.withColumn(col, F.upper(F.col(col)))
         return df
 
     def format_product(self, df: DF, col_name: str) -> DF:
+        """
+        Extract and format product-related information from a given column.
+
+        Args:
+            df (DataFrame): Input DataFrame.
+            col_name (str): Column containing product info to parse.
+
+        Returns:
+            DataFrame: DataFrame with `product_id` and `product_name` columns.
+        """
         logger.info("Formatting product field")
         pattern = r"([a-zA-Z]+_\d+)"
         df_formatted = (
@@ -89,7 +146,16 @@ class BaseProcessor(ABC):
         )
         return df_formatted
 
-    def format_timestamp(self, df: DF):
+    def format_timestamp(self, df: DF) -> DF:
+        """
+        Derive `year`, `month`, and `day` columns from a timestamp.
+
+        Args:
+            df (DataFrame): Input DataFrame.
+
+        Returns:
+            DataFrame: DataFrame with `year`, `month`, and `day` columns added.
+        """
         timestamp_col = self.config.get("timestamp_col", "timestamp")
         df_formatted = (
             df.withColumn("year", F.year(F.col(timestamp_col)))
@@ -98,7 +164,21 @@ class BaseProcessor(ABC):
         )
         return df_formatted
 
-    def compute_moving_average(self, df: DF, field: str, wdw_size_hrs: int, partition_by: str):
+    def compute_moving_average(
+        self, df: DF, field: str, wdw_size_hrs: int, partition_by: str
+    ) -> DF:
+        """
+        Compute a moving average over a specified time window.
+
+        Args:
+            df (DataFrame): Input DataFrame.
+            field (str): Field to average.
+            wdw_size_hrs (int): Size of the moving window in hours.
+            partition_by (str): Column to partition the window by.
+
+        Returns:
+            DataFrame: DataFrame with new column `mean_last_{wdw_size_hrs}h`.
+        """
         seconds = wdw_size_hrs * 3600
         microseconds = seconds * 1_000_000
 
@@ -115,6 +195,14 @@ class BaseProcessor(ABC):
         return df
 
     def write_delta_table(self, df: DF) -> None:
+        """
+        Write the processed DataFrame to the silver Delta table.
+
+        The table is partitioned by year, month, and day.
+
+        Args:
+            df (DataFrame): Processed DataFrame to write.
+        """
         account = self.config.get("storage_account_name")
         lkh_container_name = self.config.get("lakehouse_container_name")
         silver_path = f"abfss://{lkh_container_name}@{account}.dfs.core.windows.net/silver"
@@ -138,6 +226,13 @@ class BaseProcessor(ABC):
         )
 
     def update_last_processed(self, df: DF) -> None:
+        """
+        Update the `last_ingest_processed_date` in the config file with the latest
+        `_ingestion_time` from the processed DataFrame.
+
+        Args:
+            df (DataFrame): DataFrame that was processed.
+        """
         logger.info("Updating last processed data")
         if not df.isEmpty():
             max_timestamp_processed = df.select(F.max("_ingestion_time").cast("string")).first()[0]
